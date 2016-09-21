@@ -24,5 +24,6 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	log.Printf("Listening on port %s\n", port)
 	s := new(server)
-	log.Fatal(http.ListenAndServe(port, s))
+	http.Handle("/", s)
+	log.Fatal(http.ListenAndServe(port, nil))
 }
