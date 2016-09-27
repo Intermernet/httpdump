@@ -27,6 +27,7 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Printf("%v\n", err)
 			w.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 		switch {
 		case strings.HasSuffix(r.Header["Content-Type"][0], "json"):
@@ -34,6 +35,7 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			if err := json.Indent(&out, b, "", "  "); err != nil {
 				log.Printf("%v\n", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				return
 			}
 			fmt.Printf("%s\n", out.Bytes())
 		default:
