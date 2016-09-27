@@ -30,7 +30,7 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		switch {
 		case strings.HasSuffix(r.Header["Content-Type"][0], "json"):
 			var out bytes.Buffer
-			json.Indent(&out, b, "", "\t")
+			json.Indent(&out, b, "", "  ")
 			fmt.Printf("%s\n", out.Bytes())
 		default:
 			log.Printf("%s\n", b)
