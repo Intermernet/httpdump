@@ -23,9 +23,7 @@ func init() {
 	flag.DurationVar(&reqtimeout, "timeout", 5*time.Second, "request timeout (5s, 100ms, 1h etc.)")
 }
 
-type server struct{}
-
-func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func dumpReq(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), reqtimeout)
 	req := r.WithContext(ctx)
 	defer cancel()
@@ -77,7 +75,6 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	flag.Parse()
 	log.Printf("Listening at address %s\n", addr)
-	s := new(server)
-	http.Handle("/", s)
+	http.HandleFunc("/", dumpReq)
 	log.Fatal(http.ListenAndServe(addr, nil))
 }
