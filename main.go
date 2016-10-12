@@ -69,7 +69,7 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		w.WriteHeader(http.StatusOK)
 	case <-ctx.Done():
-		log.Printf("Request timeout: %s\n", ctx.Err())
+		log.Printf("Request timeout: %s %s\n", reqtimeout, ctx.Err())
 		w.WriteHeader(http.StatusRequestTimeout)
 	}
 }
